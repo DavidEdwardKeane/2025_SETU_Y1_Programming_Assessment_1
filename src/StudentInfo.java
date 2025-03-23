@@ -1,46 +1,76 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class StudentInfo {
 
-    String studentName;
+    String studentName = "Unknown";
+    int studentId = 0;
+    int studentAge = 0;
+    double studentAverageGrade = 0.0;
+    String studentCourse = "";
+    String studentSentiment = "";
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+
         StudentInfo myStudentObject = new StudentInfo();
-        System.out.println(myStudentObject.printStars(10) + " Student Information " + myStudentObject.printStars(10));
+        getDetails(myStudentObject);
+        printDetails(myStudentObject);
+    }
+
+
+    static void getDetails(StudentInfo s) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println(s.printStars(10) + " Student Information " + s.printStars(10));
         System.out.println("You will be prompted to enter some details about a student.");
 
         System.out.print("Enter Student Name: ");
-        String studentName = input.nextLine();
+        s.studentName = input.nextLine();
 
-        System.out.print("Enter Student ID (between 1000 and 99999): ");
-        int studentId = Integer.parseInt(input.nextLine());
+        while(true) {
+            System.out.print("Enter Student ID (between 1000 and 99999): ");
+            try {
+                int sid = Integer.parseInt(input.nextLine());
+                if (sid > 1000 && sid < 99999) {
+                    s.studentId = sid;
+                    break;
+                }
+                else {
+                    System.out.println("The number must be between 1000 and 99999");
+                }
+
+            } catch(NumberFormatException e) {
+                System.out.println("Please enter a number.");
+            }
+
+        }
 
         System.out.print("Enter Student Age: ");
-        int studentAge = Integer.parseInt(input.nextLine());
+        s.studentAge = Integer.parseInt(input.nextLine());
 
         System.out.print("Enter Student average grade: ");
-        double studentAverageGrade = Double.parseDouble(input.nextLine());
+        s.studentAverageGrade = Double.parseDouble(input.nextLine());
 
         System.out.print("Enter Student's Course: ");
-        String studentCourse = input.nextLine();
+        s.studentCourse = input.nextLine();
 
         System.out.print("Did the student enjoy the Course: ");
-        String studentSentiment = input.nextLine();
+        s.studentSentiment = input.nextLine();
 
-        System.out.println(myStudentObject.printStars(40));
+        System.out.println(s.printStars(40));
 
-        //TODO print out the student details
-        printDetails(myStudentObject);
-
-
-        System.out.println(myStudentObject.printStars(40));
-        System.out.println("Vowel Count in Name: " + myStudentObject.numVowels(studentName));
-        //TODO Call appropriate methods and print information as per the example above
+        return;
     }
 
-    public static void printDetails(StudentInfo student) {
+    static void printDetails(StudentInfo s) {
         System.out.println("STUDENT DETAILS");
-        System.out.println("Name: " + student.studentName);
+        System.out.println("Name: " + s.studentName);
+        System.out.println("ID: " + s.studentId);
+        System.out.println("Age: " + s.studentAge);
+        System.out.println("Average: " + s.studentAverageGrade);
+        System.out.println("Course: " + s.studentCourse);
+
+        System.out.println(s.printStars(40));
+        System.out.println("Vowel Count in Name: " + s.numVowels(s.studentName));
         return;
     }
 
