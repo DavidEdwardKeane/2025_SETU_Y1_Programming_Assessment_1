@@ -1,4 +1,7 @@
+import java.util.Scanner;
 public class StudentInfo {
+
+    String studentName;
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -8,15 +11,37 @@ public class StudentInfo {
 
         System.out.print("Enter Student Name: ");
         String studentName = input.nextLine();
-        //TODO Enter code to ask user for student details as per example above and store responses
+
+        System.out.print("Enter Student ID (between 1000 and 99999): ");
+        int studentId = Integer.parseInt(input.nextLine());
+
+        System.out.print("Enter Student Age: ");
+        int studentAge = Integer.parseInt(input.nextLine());
+
+        System.out.print("Enter Student average grade: ");
+        double studentAverageGrade = Double.parseDouble(input.nextLine());
+
+        System.out.print("Enter Student's Course: ");
+        String studentCourse = input.nextLine();
+
+        System.out.print("Did the student enjoy the Course: ");
+        String studentSentiment = input.nextLine();
 
         System.out.println(myStudentObject.printStars(40));
 
         //TODO print out the student details
+        printDetails(myStudentObject);
+
 
         System.out.println(myStudentObject.printStars(40));
         System.out.println("Vowel Count in Name: " + myStudentObject.numVowels(studentName));
         //TODO Call appropriate methods and print information as per the example above
+    }
+
+    public static void printDetails(StudentInfo student) {
+        System.out.println("STUDENT DETAILS");
+        System.out.println("Name: " + student.studentName);
+        return;
     }
 
     private int numVowels(String str) {
