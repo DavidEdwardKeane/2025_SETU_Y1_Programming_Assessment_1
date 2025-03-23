@@ -8,10 +8,14 @@ public class StudentInfo {
     double studentAverageGrade;
     String studentCourse;
     String studentSentiment;
+    int passingGrade;
+    float threshold;
 
     public static void main() {
 
         StudentInfo myStudentObject = new StudentInfo();
+        myStudentObject.threshold = 50;
+
         getDetails(myStudentObject);
         printDetails(myStudentObject);
     }
@@ -99,14 +103,8 @@ public class StudentInfo {
         System.out.println("Word Count in Course Name: " + s.numWords(s.studentCourse));
         System.out.println("Reversed Name: " + s.reverseString(s.studentName));
 
-        String above50;
-        if(s.studentAverageGrade > 50) {
-            above50 = "yes";
-        }
-        else {
-            above50 = "no";
-        }
-        System.out.println("Is average Above 50? " + above50);
+       System.out.println("Is average Above 50? " + s.isAboveThreshold(s.studentAverageGrade, s.threshold));
+
 
         String sentiment;
         String[] negative = {"n","N","no", "No", "nope", "Nope"};
@@ -162,8 +160,8 @@ public class StudentInfo {
         Algorithm: Split the input string into words using whitespace as delimiter and
                     return the count of resulting substrings.
          */
-        int totalWords = str.split("\\s").length; // Use regular expressions for clarity
-        return totalWords;
+
+        return str.split("\\s").length; // Use regular expressions for clarity - split at whitespace and count
     }
 
     private String reverseString(String str) {
@@ -174,14 +172,12 @@ public class StudentInfo {
                 and append them to a new string.
 
      */
-        StringBuilder rev = new StringBuilder();
-        rev.append(str);
-        rev.reverse();
-        String result = rev.toString();
+        StringBuilder rev = new StringBuilder(); // String builder is handy for this kind of thing
+        rev.append(str); // add string
+        rev.reverse(); // reverse
+        String result = rev.toString(); // send builder back as a string
 
-        // print reversed String
-        System.out.println();
-        return result; //you will return correct value
+        return result;
     }
 
     public String printStars(int num) {
@@ -199,9 +195,13 @@ public class StudentInfo {
     or No if it isn't
 
      */
-
-        return ""; //you will return correct value
+        String isOver;
+        if( value > threshold ) {
+            isOver = "Yes";
+        }
+        else {
+            isOver = "No";
+        }
+        return isOver;
     }
-
-    //TODO You may add in any methods that you wish
 }
