@@ -1,13 +1,13 @@
-import java.util.InputMismatchException;
+import java.util.Arrays;
 import java.util.Scanner;
 public class StudentInfo {
 
-    String studentName = "Unknown";
-    int studentId = 0;
-    int studentAge = 0;
-    double studentAverageGrade = 0.0;
-    String studentCourse = "";
-    String studentSentiment = "";
+    String studentName;
+    int studentId;
+    int studentAge;
+    double studentAverageGrade;
+    String studentCourse;
+    String studentSentiment;
 
     public static void main(String[] args) {
 
@@ -30,25 +30,50 @@ public class StudentInfo {
             System.out.print("Enter Student ID (between 1000 and 99999): ");
             try {
                 int sid = Integer.parseInt(input.nextLine());
-                if (sid > 1000 && sid < 99999) {
+                if (sid >= 1000 && sid <= 99999) {
                     s.studentId = sid;
                     break;
                 }
                 else {
-                    System.out.println("The number must be between 1000 and 99999");
+                    System.out.println("The number must be between 1000 and 99999.");
                 }
 
             } catch(NumberFormatException e) {
                 System.out.println("Please enter a number.");
             }
-
         }
 
-        System.out.print("Enter Student Age: ");
-        s.studentAge = Integer.parseInt(input.nextLine());
+        while(true) {
+            try {
+                System.out.print("Enter Student Age: ");
+                int sa = Integer.parseInt(input.nextLine());
+                if (sa >= 0 && sa <= 200) { // restricting age
+                    s.studentAge = sa;
+                    break;
+                }
+                else {
+                    System.out.println("The number must be between 0 and 200.");
+                }
+            } catch(NumberFormatException e) {
+                System.out.println("Please enter a number.");
+            }
+        }
 
-        System.out.print("Enter Student average grade: ");
-        s.studentAverageGrade = Double.parseDouble(input.nextLine());
+        while(true) {
+            try {
+                System.out.print("Enter Student average grade: ");
+                int sg = Integer.parseInt(input.nextLine());
+                if (sg >= 0 && sg <= 100) { // restricting grade
+                    s.studentAverageGrade = sg;
+                    break;
+                }
+                else {
+                    System.out.println("The number must be between 0 and 100.");
+                }
+            } catch(NumberFormatException e) {
+                System.out.println("Please enter a number.");
+            }
+        }
 
         System.out.print("Enter Student's Course: ");
         s.studentCourse = input.nextLine();
@@ -68,9 +93,40 @@ public class StudentInfo {
         System.out.println("Age: " + s.studentAge);
         System.out.println("Average: " + s.studentAverageGrade);
         System.out.println("Course: " + s.studentCourse);
+        System.out.println("Did the student enjoy the Course: " + s.studentSentiment);
 
         System.out.println(s.printStars(40));
+
         System.out.println("Vowel Count in Name: " + s.numVowels(s.studentName));
+        System.out.println("Word Count in Course Name: " + s.numWords(s.studentCourse));
+        System.out.println("Reversed Name: " + s.reverseString(s.studentName));
+        String above50;
+        if(s.studentAverageGrade > 50) {
+            above50 = "yes";
+        }
+        else {
+            above50 = "no";
+        }
+        System.out.println("Is average Above 50? " + above50);
+
+        System.out.println("Word Count in Course Name: " + s.numVowels(s.studentName)); //TODO
+
+        String sentiment;
+        String[] negative = {"n","N","no", "No", "nope", "Nope"};
+        String[] positive = {"y","Y","yes","Yes","yep"};
+        boolean containsNegative = Arrays.stream(negative).anyMatch(s.studentSentiment::equals);
+        boolean containsPositive = Arrays.stream(positive).anyMatch(s.studentSentiment::equals);
+        if(containsNegative) {
+            sentiment = "Course isn't that enjoyable";
+        }
+        else if (containsPositive) {
+            sentiment = "Great Course";
+        }
+        else {
+            sentiment = "Student sentiment unclear";
+        }
+        System.out.println(sentiment);
+
         return;
     }
 
@@ -81,7 +137,21 @@ public class StudentInfo {
         Algorithm: Iterate through the characters of the input string and
                    increment a counter for each vowel encountered.
          */
-        return -1; //you will return correct value -1 used so that code compiles
+
+        str = str.toLowerCase();
+        int totalVowels = 0;
+
+        for (int i = 0; i < str.length(); i++) {    // check if char[i] is vowel
+            if (str.charAt(i) == 'a'
+                    || str.charAt(i) == 'e'
+                    || str.charAt(i) == 'i'
+                    || str.charAt(i) == 'o'
+                    || str.charAt(i) == 'u') {
+                totalVowels++;
+            }
+        }
+
+        return totalVowels;
     }
 
     private int numWords(String str) {
