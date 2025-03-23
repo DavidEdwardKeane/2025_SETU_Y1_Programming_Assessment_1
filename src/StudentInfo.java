@@ -62,7 +62,7 @@ public class StudentInfo {
         while(true) {
             try {
                 System.out.print("Enter Student average grade: ");
-                int sg = Integer.parseInt(input.nextLine());
+                float sg = Float.parseFloat(input.nextLine());
                 if (sg >= 0 && sg <= 100) { // restricting grade
                     s.studentAverageGrade = sg;
                     break;
@@ -70,7 +70,7 @@ public class StudentInfo {
                 else {
                     System.out.println("The number must be between 0 and 100.");
                 }
-            } catch(NumberFormatException e) {
+            } catch(Exception e) {
                 System.out.println("Please enter a number.");
             }
         }
@@ -98,6 +98,7 @@ public class StudentInfo {
         System.out.println("Vowel Count in Name: " + s.numVowels(s.studentName));
         System.out.println("Word Count in Course Name: " + s.numWords(s.studentCourse));
         System.out.println("Reversed Name: " + s.reverseString(s.studentName));
+
         String above50;
         if(s.studentAverageGrade > 50) {
             above50 = "yes";
@@ -106,8 +107,6 @@ public class StudentInfo {
             above50 = "no";
         }
         System.out.println("Is average Above 50? " + above50);
-
-        System.out.println("Word Count in Course Name: " + s.numVowels(s.studentName)); //TODO
 
         String sentiment;
         String[] negative = {"n","N","no", "No", "nope", "Nope"};
@@ -120,7 +119,7 @@ public class StudentInfo {
                 break;
             }
         }
-        boolean containsPositive = Arrays.stream(positive).anyMatch(s.studentSentiment::equals);
+        boolean containsPositive = Arrays.asList(positive).contains(s.studentSentiment);
         if(containsNegative) {
             sentiment = "Course isn't that enjoyable";
         }
@@ -131,8 +130,6 @@ public class StudentInfo {
             sentiment = "Student sentiment unclear";
         }
         System.out.println(sentiment);
-
-        return;
     }
 
     private int numVowels(String str) {
@@ -165,7 +162,8 @@ public class StudentInfo {
         Algorithm: Split the input string into words using whitespace as delimiter and
                     return the count of resulting substrings.
          */
-        return -1; //you will return correct value -1 used so that code compiles
+        int totalWords = str.split("\\s").length; // Use regular expressions for clarity
+        return totalWords;
     }
 
     private String reverseString(String str) {
@@ -176,8 +174,14 @@ public class StudentInfo {
                 and append them to a new string.
 
      */
+        StringBuilder rev = new StringBuilder();
+        rev.append(str);
+        rev.reverse();
+        String result = rev.toString();
 
-        return ""; //you will return correct value
+        // print reversed String
+        System.out.println();
+        return result; //you will return correct value
     }
 
     public String printStars(int num) {
