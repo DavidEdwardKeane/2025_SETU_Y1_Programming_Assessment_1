@@ -9,7 +9,7 @@ public class StudentInfo {
     String studentCourse;
     String studentSentiment;
 
-    public static void main(String[] args) {
+    public static void main() {
 
         StudentInfo myStudentObject = new StudentInfo();
         getDetails(myStudentObject);
@@ -82,8 +82,6 @@ public class StudentInfo {
         s.studentSentiment = input.nextLine();
 
         System.out.println(s.printStars(40));
-
-        return;
     }
 
     static void printDetails(StudentInfo s) {
@@ -114,7 +112,14 @@ public class StudentInfo {
         String sentiment;
         String[] negative = {"n","N","no", "No", "nope", "Nope"};
         String[] positive = {"y","Y","yes","Yes","yep"};
-        boolean containsNegative = Arrays.stream(negative).anyMatch(s.studentSentiment::equals);
+        String s1 = s.studentSentiment;
+        boolean containsNegative = false;
+        for (String string : negative) {
+            if (s1.equals(string)) {
+                containsNegative = true;
+                break;
+            }
+        }
         boolean containsPositive = Arrays.stream(positive).anyMatch(s.studentSentiment::equals);
         if(containsNegative) {
             sentiment = "Course isn't that enjoyable";
@@ -138,10 +143,10 @@ public class StudentInfo {
                    increment a counter for each vowel encountered.
          */
 
-        str = str.toLowerCase();
+        str = str.toLowerCase(); // don't deal with two cases of each letter later
         int totalVowels = 0;
 
-        for (int i = 0; i < str.length(); i++) {    // check if char[i] is vowel
+        for (int i = 0; i < str.length(); i++) {    // go over each letter and check for vowels
             if (str.charAt(i) == 'a'
                     || str.charAt(i) == 'e'
                     || str.charAt(i) == 'i'
