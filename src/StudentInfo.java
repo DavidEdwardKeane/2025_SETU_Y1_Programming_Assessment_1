@@ -8,7 +8,6 @@ public class StudentInfo {
     double studentAverageGrade;
     String studentCourse;
     String studentSentiment;
-    int passingGrade;
     float threshold;
 
     public static void main() {
@@ -175,13 +174,11 @@ public class StudentInfo {
         StringBuilder rev = new StringBuilder(); // String builder is handy for this kind of thing
         rev.append(str); // add string
         rev.reverse(); // reverse
-        String result = rev.toString(); // send builder back as a string
-
-        return result;
+        return rev.toString(); // send builder back as a string
     }
 
     public String printStars(int num) {
-        String theStars = "";
+        String theStars = ""; // might be better to use StringBuilder here, but it's part of the skeleton code of the brief.
         for(int i = 0; i<num;i++)
             theStars += "*";
         return theStars;
