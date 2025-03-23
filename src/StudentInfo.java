@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Scanner;
+
 public class StudentInfo {
 
     String studentName;
@@ -21,6 +22,10 @@ public class StudentInfo {
 
 
     static void getDetails(StudentInfo s) {
+        /*
+        Description: This method take in the details from the user.
+        Algorithm: Give an interface, ask for input, test the validity of the input, save to object
+         */
         Scanner input = new Scanner(System.in);
 
         System.out.println(s.printStars(10) + " Student Information " + s.printStars(10));
@@ -29,51 +34,48 @@ public class StudentInfo {
         System.out.print("Enter Student Name: ");
         s.studentName = input.nextLine();
 
-        while(true) {
+        while (true) {
             System.out.print("Enter Student ID (between 1000 and 99999): ");
             try {
                 int sid = Integer.parseInt(input.nextLine());
                 if (sid >= 1000 && sid <= 99999) {
                     s.studentId = sid;
                     break;
-                }
-                else {
+                } else {
                     System.out.println("The number must be between 1000 and 99999.");
                 }
 
-            } catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Please enter a number.");
             }
         }
 
-        while(true) {
+        while (true) {
             try {
                 System.out.print("Enter Student Age: ");
                 int sa = Integer.parseInt(input.nextLine());
                 if (sa >= 0 && sa <= 200) { // restricting age
                     s.studentAge = sa;
                     break;
-                }
-                else {
+                } else {
                     System.out.println("The number must be between 0 and 200.");
                 }
-            } catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Please enter a number.");
             }
         }
 
-        while(true) {
+        while (true) {
             try {
                 System.out.print("Enter Student average grade: ");
                 float sg = Float.parseFloat(input.nextLine());
                 if (sg >= 0 && sg <= 100) { // restricting grade
                     s.studentAverageGrade = sg;
                     break;
-                }
-                else {
+                } else {
                     System.out.println("The number must be between 0 and 100.");
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println("Please enter a number.");
             }
         }
@@ -88,6 +90,11 @@ public class StudentInfo {
     }
 
     static void printDetails(StudentInfo s) {
+        /*
+        Description: This method formats and outputs the information
+        Algorithm: Give an interface, ask for input, test the validity of the input, save to object
+         */
+
         System.out.println("STUDENT DETAILS");
         System.out.println("Name: " + s.studentName);
         System.out.println("ID: " + s.studentId);
@@ -102,31 +109,8 @@ public class StudentInfo {
         System.out.println("Word Count in Course Name: " + s.numWords(s.studentCourse));
         System.out.println("Reversed Name: " + s.reverseString(s.studentName));
 
-       System.out.println("Is average Above 50? " + s.isAboveThreshold(s.studentAverageGrade, s.threshold));
-
-
-        String sentiment;
-        String[] negative = {"n","N","no", "No", "nope", "Nope"};
-        String[] positive = {"y","Y","yes","Yes","yep"};
-        String s1 = s.studentSentiment;
-        boolean containsNegative = false;
-        for (String string : negative) {
-            if (s1.equals(string)) {
-                containsNegative = true;
-                break;
-            }
-        }
-        boolean containsPositive = Arrays.asList(positive).contains(s.studentSentiment);
-        if(containsNegative) {
-            sentiment = "Course isn't that enjoyable";
-        }
-        else if (containsPositive) {
-            sentiment = "Great Course";
-        }
-        else {
-            sentiment = "Student sentiment unclear";
-        }
-        System.out.println(sentiment);
+        System.out.println("Is average Above 50? " + s.isAboveThreshold(s.studentAverageGrade, s.threshold));
+        System.out.println(s.isSentimentPositive(s.studentSentiment));
     }
 
     private int numVowels(String str) {
@@ -179,7 +163,7 @@ public class StudentInfo {
 
     public String printStars(int num) {
         String theStars = ""; // might be better to use StringBuilder here, but it's part of the skeleton code of the brief.
-        for(int i = 0; i<num;i++)
+        for (int i = 0; i < num; i++)
             theStars += "*";
         return theStars;
     }
@@ -193,12 +177,38 @@ public class StudentInfo {
 
      */
         String isOver;
-        if( value > threshold ) {
+        if (value > threshold) {
             isOver = "Yes";
-        }
-        else {
+        } else {
             isOver = "No";
         }
         return isOver;
+    }
+
+    public String isSentimentPositive(String studentSentiment) {
+                 /*
+    Description: This method takes the student's opinion on the course and looks for positive or negative feedback
+    Algorithm: Two arrays of strings are checked against providing a positive, negative, or unsure message
+
+     */
+        String sentiment;
+        String[] negative = {"n", "N", "no", "No", "nope", "Nope"};
+        String[] positive = {"y", "Y", "yes", "Yes", "yep"};
+        boolean containsNegative = false;
+        for (String string : negative) {
+            if (studentSentiment.equals(string)) {
+                containsNegative = true;
+                break;
+            }
+        }
+        boolean containsPositive = Arrays.asList(positive).contains(studentSentiment);
+        if (containsNegative) {
+            sentiment = "Course isn't that enjoyable";
+        } else if (containsPositive) {
+            sentiment = "Great Course";
+        } else {
+            sentiment = "Student sentiment unclear";
+        }
+        return sentiment;
     }
 }
